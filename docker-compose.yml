@@ -1,0 +1,40 @@
+services:
+  ollama:
+    build:
+      context: ./ollama
+    ports:
+      - "${OLLAMA_PORT}:${OLLAMA_PORT}"
+    environment:
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      # - OLLAMA_PORT=${OLLAMA_PORT}
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
+    volumes:
+      - ollama_data:/root/.ollama
+    gpus: all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+
+  bot:
+    build:
+      context: .
+    volumes:
+      - ./app:/code/app  # монтируем код
+    working_dir: /code
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - OLLAMA_PORT=${OLLAMA_PORT}
+      - OLLAMA_URL=${OLLAMA_URL}
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
