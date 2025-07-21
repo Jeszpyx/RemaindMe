@@ -1,9 +1,10 @@
 FROM python:3.13-slim
 
-# Установим зависимости для pip, curl и автообновления кода
+# Установим зависимости для pip, curl, ffmpeg и автообновления кода
 RUN apt-get update && apt-get install -y \
     curl \
     inotify-tools \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Создаём рабочую директорию

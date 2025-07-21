@@ -1,3 +1,4 @@
+import os
 from environs import Env
 
 env = Env(expand_vars=True)
@@ -13,8 +14,14 @@ class Enviroment:
         self.POSTGRES_PASSWORD = env.str("POSTGRES_PASSWORD")
         self.POSTGRES_PORT = env.int("POSTGRES_PORT")
         self.POSTGRES_DB = env.str("POSTGRES_DB")
+        self.OLLAMA_HOST = env.str("OLLAMA_HOST")
         self.OLLAMA_URL = env.str("OLLAMA_URL")
         self.OLLAMA_MODEL = env.str("OLLAMA_MODEL")
+        self.WHISPER_MODEL = env.str("WHISPER_MODEL")
+        self.WHISPER_DEVICE = env.str("WHISPER_DEVICE")
+
+        
+
 
 
 enviroment = Enviroment()
